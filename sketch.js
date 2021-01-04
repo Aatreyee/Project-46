@@ -182,52 +182,67 @@ else if(gameState===1){
     
     for(var k=0;k<donut.length;k++){
       donut[k].display();
-    if(donut[k].body.position.y>=height-160){
-       gameState=5;
-       losingSound.play();
+      if (detectHit(donut[k],apple)) {
+        World.remove(world,donut[k]);
+        donut.splice(k,1);
+      }
+    }
+    for(var k=0;k<donut.length;k++){
+      if(donut[k].body.position.y>=height-160){
+        gameState=5;
+        //losingSound.play();
+        
+       }
+
       
-       }
-       else{
-         gameState=2
-       }
     }
 
 //creating for loop to display the pizza
     
     for(var k=0;k<pizza.length;k++){
      pizza[k].display();
-    if(pizza[k].body.position.y>=height-160){
-     gameState=5;
-      losingSound.play();
-      
-     }
-
-     else{
-      gameState=2
+     if (detectHit(pizza[k],apple)) {
+      World.remove(world,pizza[k]);
+      pizza.splice(k,1);
     }
+  }
+    for(var k=0;k<pizza.length;k++){
+      if(pizza[k].body.position.y>=height-160){
+        gameState=5;
+        //losingSound.play();
+        
+      }
 
-    } 
+      
+    }
+  
   
 //creating for loop to display the hotDog
    
     for(var k=0;k<hotDog.length;k++){
       hotDog[k].display();
-    if(hotDog[k].body.position.y>=height-160){
-        gameState=5;
-        losingSound.play();
-        
-       }
-
-       else{
-        gameState=2
+      if (detectHit(hotDog[k],apple)) {
+        World.remove(world,hotDog[k]);
+        hotDog.splice(k,1);
       }
-
     }
+
+      for(var k=0;k<hotDog.length;k++){
+
+        if(hotDog[k].body.position.y>=height-160){
+          gameState=5;
+          //losingSound.play();
+          
+        }
+
+       
+      }
+    
   
   }
 
    else if(gameState===2){
-     drawSprites();
+    
       background(sceneImg3);
       image( cyclistImage,width/2-800,height/2-150,300,300);
  
@@ -281,8 +296,11 @@ function detectCollision(lapple,lfood){
 	foodBodyPosition=lfood.body.position
 	var distance=dist(foodBodyPosition.x,foodBodyPosition.y,appleBodyPosition.x,appleBodyPosition.y)
 	if(distance<=lapple.body.circleRadius+lfood.body.circleRadius){
-    World.remove(world,lfood.body);
-    
+    		return true;
+	} else{
+		return false;
 	}
+    
+	
 }
  
